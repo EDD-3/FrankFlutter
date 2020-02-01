@@ -3,6 +3,8 @@ import 'package:meta/meta.dart';
 abstract class Failure extends Equatable {
   @override
   List<Object> get props => [];
+
+  String getMessage();
 }
 
 class NetworkFailure implements Failure{
@@ -12,5 +14,11 @@ class NetworkFailure implements Failure{
 
   @override
   List<Object> get props => [message];
+
+  @override
+  String getMessage() {
+
+    return message;
+  }
 
 }
