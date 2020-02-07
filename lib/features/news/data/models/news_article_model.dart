@@ -24,7 +24,7 @@ class NewsArticleModel extends NewsArticle {
       article: json['post_stripped'],
       articleUrl: json['link'],
       author: json['author_name'],
-      thumbnailUrl: json['thumbnai'],
+      thumbnailUrl: json['thumbnail'],
       articleDate: DateTime.parse(json['post_date']),
     );
   }

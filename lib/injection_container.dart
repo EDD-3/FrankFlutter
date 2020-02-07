@@ -10,31 +10,34 @@ import 'package:news_app/features/news/presentation/bloc/bloc.dart';
 
 final sl = GetIt.instance;
 
-void init() {
-  //Features
+Future<void> init() async {
+  //!Features
   _news();
-  //Core
+  //!Core
   _core();
-  //External-Dependencies
+  //!External-Dependencies
   _external();
 }
 
 void _news() {
   //Bloc
-  sl.registerFactory<NewsBloc>(()=>NewsBloc(getNewsList: sl()));
+  sl.registerFactory<NewsBloc>(() => NewsBloc(getNewsList: sl()));
   //Use-cases
-  sl.registerLazySingleton<GetNewsList>(()=>GetNewsList(repository: sl()));
+  sl.registerLazySingleton<GetNewsList>(() => GetNewsList(repository: sl()));
   //Repositories
-  sl.registerLazySingleton<NewsArticleRepository>(()=>NewsArticleRepositoryImpl(networkInfo: sl(),remoteDatasource: sl()));
+  sl.registerLazySingleton<NewsArticleRepository>(() =>
+      NewsArticleRepositoryImpl(networkInfo: sl(), remoteDatasource: sl()));
   //Datasources
-  sl.registerLazySingleton<NewsArticleRemoteDatasource>(()=>NewsArticleRemoteDatasourceImp(client: sl()));
+  sl.registerLazySingleton<NewsArticleRemoteDatasource>(
+      () => NewsArticleRemoteDatasourceImp(client: sl()));
 }
 
 void _core() {
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(connectionChecker: sl()));
+  sl.registerLazySingleton<NetworkInfo>(
+      () => NetworkInfoImpl(connectionChecker: sl()));
 }
 
 void _external() {
-  sl.registerLazySingleton(()=>DataConnectionChecker());
-  sl.registerLazySingleton(()=>http.Client());
+  sl.registerLazySingleton(() => DataConnectionChecker());
+  sl.registerLazySingleton(() => http.Client());
 }

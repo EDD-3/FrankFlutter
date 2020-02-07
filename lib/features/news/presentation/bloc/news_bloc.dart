@@ -12,7 +12,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
 
   NewsBloc({
     @required this.getNewsList,
-  });
+  }) : assert(getNewsList != null);
 
   @override
   NewsState get initialState => NewsInitialNewsState();
