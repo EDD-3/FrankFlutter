@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/features/news/data/models/news_article_model.dart';
 import 'package:news_app/features/news/presentation/bloc/bloc.dart';
+import 'package:news_app/features/news/presentation/widgets/widgets.dart';
 import '../../../../injection_container.dart';
 
 class NewsPage extends StatefulWidget {
@@ -10,6 +12,7 @@ class NewsPage extends StatefulWidget {
 
 class _NewsPageState extends State<NewsPage> {
   NewsBloc _bloc;
+  List<NewsArticleModel> newsList;
 
   @override
   void initState() {
@@ -44,23 +47,12 @@ class _NewsPageState extends State<NewsPage> {
               message: 'No hay noticias nuevas 😢',
             );
           } else if (state is NewsLoadingState) {
-            return Container(
-              height: MediaQuery.of(context).size.height / 3,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+            return LoadingWidget();
           } else if (state is NewsLoadedState) {
-            return ListView.builder(
-                itemCount: state.newsList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    leading: CircleAvatar(backgroundImage: NetworkImage(state.newsList[index].thumbnailUrl),),
-                    title: Text(state.newsList[index].title),
-                    subtitle: Text(state.newsList[index].author),
-
-                  );
-                });
+            newsList = state.newsList;
+            return NewsFeed(
+              newsList: newsList,
+            );
           } else if (state is NewsErrorState) {
             return MessageDisplay(
               message: state.errorMessage,
@@ -68,22 +60,6 @@ class _NewsPageState extends State<NewsPage> {
           }
         },
       ),
-    );
-  }
-}
-
-class MessageDisplay extends StatelessWidget {
-  final String message;
-
-  const MessageDisplay({
-    Key key,
-    @required this.message,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(message),
     );
   }
 }

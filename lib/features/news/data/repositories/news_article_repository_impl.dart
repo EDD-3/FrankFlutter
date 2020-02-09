@@ -28,7 +28,6 @@ class NewsArticleRepositoryImpl implements NewsArticleRepository {
         return Left(NetworkFailure(message: e.message));
       }
     }
-
     return Left(NetworkFailure(message: Messages.NO_NETWORK));
   }
 }
