@@ -6,7 +6,7 @@ import 'package:news_app/features/gates/domain/usecases/get_gate_list.dart';
 import './bloc.dart';
 
 class GatesBloc extends Bloc<GatesEvent, GatesState> {
-  final GetGateList getGatesList;
+  final GetGatesList getGatesList;
 
   GatesBloc({
     @required this.getGatesList,
