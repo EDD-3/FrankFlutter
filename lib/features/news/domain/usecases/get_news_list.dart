@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:news_app/core/errors/failures.dart';
 import 'package:news_app/core/usecases/no_params.dart';

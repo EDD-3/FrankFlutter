@@ -6,10 +6,10 @@ import 'package:news_app/features/gates/domain/entities/gate.dart';
 import 'package:news_app/features/gates/domain/repositories/gate_repository.dart';
 import 'package:meta/meta.dart';
 
-class GetGateList implements UseCase<List<Gate>, NoParams> {
-  final GateRepository repository;
+class GetGatesList implements UseCase<List<Gate>, NoParams> {
+  final GatesRepository repository;
 
-  GetGateList({@required this.repository});
+  GetGatesList({@required this.repository});
 
   @override
   Future<Either<Failure, List<Gate>>> call(NoParams params) async {

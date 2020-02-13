@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:meta/meta.dart';
 import 'package:news_app/features/news/domain/entities/news_article.dart';
 
 class NewsArticleModel extends NewsArticle {

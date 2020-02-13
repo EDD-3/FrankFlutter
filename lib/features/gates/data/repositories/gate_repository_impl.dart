@@ -8,11 +8,11 @@ import 'package:news_app/features/gates/domain/repositories/gate_repository.dart
 import '../../../../core/errors/failures.dart';
 import '../../../../core/network/network_info.dart';
 
-class GateRepositoryImpl implements GateRepository {
+class GatesRepositoryImpl implements GatesRepository {
   final GateRemoteDatasource remoteDatasource;
   final NetworkInfo networkInfo;
 
-  GateRepositoryImpl({
+  GatesRepositoryImpl({
     @required this.remoteDatasource,
     @required this.networkInfo,
   });
