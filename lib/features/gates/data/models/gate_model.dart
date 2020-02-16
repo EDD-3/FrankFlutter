@@ -5,13 +5,15 @@ import 'package:meta/meta.dart';
 
 class GateModel extends Gate {
   GateModel(
-      {@required String crossingName,
+      {@required String hoursOpen,
+      @required String crossingName,
       @required String portStatus,
-      @required DateTime date,
+      @required String date,
       @required Lane commercialLane,
       @required Lane passengerLane,
       @required Lane pedestrianLane})
       : super(
+          hoursOpen: hoursOpen,
           crossingName: crossingName,
           portStatus: portStatus,
           date: date,
@@ -21,23 +23,26 @@ class GateModel extends Gate {
         );
 
   factory GateModel.fromJson(Map<String, dynamic> json) {
-    LaneModel commercial = json['commercial_vehicle_lanes']
+    LaneModel commercial = json.containsKey('commercial_vehicle_lanes')
         ? LaneModel.fromJson(json['commercial_vehicle_lanes'])
         : null;
-    LaneModel passenger = json['passenger_vehicle_lanes']
+
+    LaneModel passenger = json.containsKey('passenger_vehicle_lanes')
         ? LaneModel.fromJson(json['passenger_vehicle_lanes'])
         : null;
-    LaneModel pedestrian = json['pedestrian_lanes']
+
+    LaneModel pedestrian = json.containsKey('pedestrian_lanes')
         ? LaneModel.fromJson(json['pedestrian_lanes'])
         : null;
 
     return GateModel(
       crossingName: json['crossing_name'],
       portStatus: json['port_status'],
-      date: json['json'],
+      date: json['date'],
       commercialLane: commercial,
       passengerLane: passenger,
       pedestrianLane: pedestrian,
+      hoursOpen: json['hours'],
     );
   }
 }

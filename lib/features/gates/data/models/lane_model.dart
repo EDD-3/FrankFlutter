@@ -11,30 +11,35 @@ class LaneModel extends Lane {
     @required final LaneType readyLane,
     @required final LaneType sentriLane,
   }) : super(
-            maximumLanes: maximumLanes,
-            standarLane: standarLane,
-            fastLane: fastLane,
-            sentriLane: sentriLane,
-            readyLane: readyLane);
+          maximumLanes: maximumLanes,
+          standarLane: standarLane,
+          fastLane: fastLane,
+          sentriLane: sentriLane,
+          readyLane: readyLane,
+        );
 
   factory LaneModel.fromJson(Map<String, dynamic> json) {
-    LaneTypeModel fast =
-        json['FAST_lanes'] ? LaneTypeModel.fromJson(json['FAST_lanes']) : null;
-    LaneTypeModel ready = json['ready_lanes']
+    if (json['maximum_lanes'] == 'N/A') return null;
+
+    LaneTypeModel fast = json.containsKey('FAST_lanes')
+        ? LaneTypeModel.fromJson(json['FAST_lanes'])
+        : null;
+    LaneTypeModel ready = json.containsKey('ready_lanes')
         ? LaneTypeModel.fromJson(json['ready_lanes'])
         : null;
-    LaneTypeModel sentri = json['NEXUS_SENTRI_lanes']
+    LaneTypeModel sentri = json.containsKey('NEXUS_SENTRI_lanes')
         ? LaneTypeModel.fromJson(json['NEXUS_SENTRI_lanes'])
         : null;
-    LaneTypeModel standard = json['standard_lanes']
+    LaneTypeModel standard = json.containsKey('standard_lanes')
         ? LaneTypeModel.fromJson(json['standard_lanes'])
         : null;
 
     return LaneModel(
-        fastLane: fast,
-        readyLane: ready,
-        sentriLane: sentri,
-        maximumLanes: json['maximum_lanes'],
-        standarLane: standard);
+      fastLane: fast,
+      readyLane: ready,
+      sentriLane: sentri,
+      maximumLanes: json['maximum_lanes'],
+      standarLane: standard,
+    );
   }
 }

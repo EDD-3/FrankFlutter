@@ -3,15 +3,17 @@ import 'package:meta/meta.dart';
 import 'lane.dart';
 
 class Gate extends Equatable {
-  final DateTime date;
+  final String date;
   final String crossingName;
   final String portStatus;
+  final String hoursOpen;
   final Lane commercialLane;
   final Lane passengerLane;
   final Lane pedestrianLane;
 
   Gate(
-      {@required this.crossingName,
+      {@required this.hoursOpen,
+      @required this.crossingName,
       @required this.portStatus,
       @required this.date,
       @required this.commercialLane,

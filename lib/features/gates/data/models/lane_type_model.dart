@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:news_app/core/booleans/check_status.dart';
 import 'package:news_app/features/gates/domain/entities/lane_type.dart';
 
 class LaneTypeModel extends LaneType {
@@ -14,10 +15,14 @@ class LaneTypeModel extends LaneType {
             updateTime: updateTime);
 
   factory LaneTypeModel.fromJson(Map<String, dynamic> json) {
+
+    if (isNotOperational(json['operational_status'])) return null;
+
     return LaneTypeModel(
         delayMinutes: json['delay_minutes'],
         openLanes: json['lanes_open'],
         operationalStatus: json['operational_status'],
         updateTime: json['update_time']);
   }
+
 }

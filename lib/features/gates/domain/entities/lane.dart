@@ -15,7 +15,8 @@ class Lane extends Equatable {
       @required this.standarLane,
       @required this.fastLane,
       @required this.readyLane,
-      @required this.sentriLane});
+      @required this.sentriLane,
+    });
 
   @override
   List<Object> get props =>
