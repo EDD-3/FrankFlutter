@@ -5,11 +5,13 @@ class LaneTypeCard extends StatelessWidget {
   final LaneType laneType;
   final IconData laneTypeIcon;
   final String laneTypeName;
+  final Color colorIcon;
   const LaneTypeCard({
     Key key,
     @required this.laneTypeIcon,
     @required this.laneTypeName,
     @required this.laneType,
+    @required this.colorIcon,
   }) : super(key: key);
 
   @override
@@ -18,38 +20,70 @@ class LaneTypeCard extends StatelessWidget {
     return Container(
       child: Card(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    Text(laneTypeName),
-                    Icon(laneTypeIcon),
+                    Text(
+                      laneTypeName,
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                    Icon(
+                      laneTypeIcon,
+                      color: colorIcon,
+                      size: 38.0,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                   ],
                 )
               ],
             ),
             Column(
               children: <Widget>[
-                Text('Update time:'),
-                Text(laneType.updateTime),
+                Container(
+                  padding: EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 0.25),
+                      color: getDelayBoxColor(),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Delay (minutes): ',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text(
+                        laneType.delayMinutes.toString(),
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 15.0,
+                ),
+                Text('Open lanes:', style: TextStyle(fontSize: 16.0)),
+                Text(laneType.openLanes.toString(),
+                    style: TextStyle(fontSize: 16.0, color: Colors.grey[600])),
+                SizedBox(
+                  height: 15.0,
+                ),
                 SizedBox(
                   height: 10.0,
                 ),
-                Text('Delay in minutes:'),
-                Text(laneType.delayMinutes.toString()),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text('Open lanes:'),
-                Text(laneType.openLanes.toString()),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text('Operational status:'),
-                Text(laneType.operationalStatus)
               ],
             )
           ],
@@ -57,4 +91,8 @@ class LaneTypeCard extends StatelessWidget {
       ),
     );
   }
+
+  MaterialColor getDelayBoxColor() => (laneType.delayMinutes <= 30)
+      ? Colors.green
+      : (laneType.delayMinutes <= 60) ? Colors.amber : Colors.red;
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/features/gates/presentation/pages/gates_page.dart';
-import 'features/news/presentation/pages/news_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async {

@@ -1,13 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/core/messages/messages.dart';
 import 'package:news_app/features/gates/presentation/bloc/bloc.dart';
 import 'package:news_app/features/gates/presentation/widgets/commercial_lane.dart';
 import 'package:news_app/features/gates/presentation/widgets/gate_card.dart';
 import 'package:news_app/features/gates/presentation/widgets/passenger_lane.dart';
 import 'package:news_app/features/gates/presentation/widgets/pedestrain_lane.dart';
 import 'package:news_app/features/news/presentation/widgets/loading_widget.dart';
-
 import '../../../../injection_container.dart';
 
 class GatesPage extends StatefulWidget {
@@ -29,7 +29,8 @@ class _GatesPageState extends State<GatesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Garitas Nogales"),
+        title: Text("Garitas Nogales"),actions: <Widget>[ IconButton(icon: Icon(Icons.refresh),onPressed: () => _bloc.add(GetGatesEvent()),)],
+        backgroundColor: Colors.red[600],
       ),
       body: buildBody(),
     );
@@ -40,9 +41,7 @@ class _GatesPageState extends State<GatesPage> {
       create: (context) => _bloc,
       child: BlocBuilder<GatesBloc, GatesState>(builder: (context, state) {
         if (state is InitialGatesState) {
-          return Center(
-            child: Text('No hay infomacion que mostrar'),
-          );
+          return MessageDisplay();
         }
 
         if (state is GatesLoadingState) {
@@ -54,6 +53,7 @@ class _GatesPageState extends State<GatesPage> {
             child: Column(
               children: <Widget>[
                 CarouselSlider.builder(
+                  viewportFraction: 1.0,
                     onPageChanged: (index) {
                       setState(() {
                         stateIndex = index;
@@ -62,18 +62,20 @@ class _GatesPageState extends State<GatesPage> {
                     itemCount: state.gateList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GateCard(
-                        gateList: state.gateList,
-                        index: index,
+                        gateModel: state.gateList[index],
                       );
                     }),
                 PassengerLane(
                   passengerLane: state.gateList[stateIndex].passengerLane,
+                  gateStatus: state.gateList[stateIndex].portStatus,
                 ),
                 PedestrainLane(
                   pedestrainLane: state.gateList[stateIndex].pedestrianLane,
+                  gateStatus: state.gateList[stateIndex].portStatus,
                 ),
                 CommercialLane(
                   commercialLane: state.gateList[stateIndex].commercialLane,
+                  gateStatus: state.gateList[stateIndex].portStatus,
                 ),
               ],
             ),
@@ -84,3 +86,15 @@ class _GatesPageState extends State<GatesPage> {
   }
 }
 
+class MessageDisplay extends StatelessWidget {
+  const MessageDisplay({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(Messages.NO_INFO),
+    );
+  }
+}

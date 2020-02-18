@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:news_app/features/gates/data/models/gate_model.dart';
 
 class GateCard extends StatelessWidget {
-  final List<GateModel> gateList;
-  final int index;
+  final GateModel gateModel;
   const GateCard({
     Key key,
-    @required this.gateList,
-    @required this.index,
+    @required this.gateModel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (gateModel.portStatus == 'Closed')
+      return buildCard(color: Colors.redAccent, iconData: Icons.lock_outline);
+    else
+      return buildCard();
+  }
+
+  Container buildCard(
+      {Color color = Colors.greenAccent, IconData iconData = Icons.lock_open}) {
     return Container(
       padding: EdgeInsets.fromLTRB(2, 2, 0, 0),
-      height: 50.0,
       width: double.maxFinite,
       child: Card(
           elevation: 2,
@@ -25,25 +30,41 @@ class GateCard extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                       child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Icon(
-                        Icons.lock_open,
-                        color: Colors.greenAccent,
-                        size: 40.0,
+                      Flexible(
+                        child: Icon(
+                          iconData,
+                          color: color,
+                          size: 40.0,
+                        ),
                       ),
                       Flexible(
                         child: Column(children: <Widget>[
                           Text(
-                            gateList[index].crossingName,
-                            style: TextStyle(fontSize: 20.0),
+                            gateModel.crossingName,
+                            style: TextStyle(fontSize: 19.0),
                           ),
-                          Text(gateList[index].portStatus,
+                          Text(gateModel.portStatus,
                               style: TextStyle(
                                 fontSize: 20.0,
                                 color: Colors.grey[500],
                               )),
                         ]),
                       ),
+                      Flexible(
+                        child: Column(children: <Widget>[
+                          Text(
+                            'Update time: ',
+                            style: TextStyle(fontSize: 19.0),
+                          ),
+                          Text(gateModel.pedestrianLane.standarLane.updateTime,
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.grey[500],
+                              )),
+                        ]),
+                      )
                     ],
                   )),
                 ],
@@ -55,9 +76,9 @@ class GateCard extends StatelessWidget {
                     child: Column(children: <Widget>[
                       Text(
                         'Date',
-                        style: TextStyle(fontSize: 20.0),
+                        style: TextStyle(fontSize: 19.0),
                       ),
-                      Text(gateList[index].date,
+                      Text(gateModel.date,
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.grey[500],
@@ -68,9 +89,9 @@ class GateCard extends StatelessWidget {
                     child: Column(children: <Widget>[
                       Text(
                         'Hours',
-                        style: TextStyle(fontSize: 20.0),
+                        style: TextStyle(fontSize: 19.0),
                       ),
-                      Text(gateList[index].hoursOpen,
+                      Text(gateModel.hoursOpen,
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.grey[500],
