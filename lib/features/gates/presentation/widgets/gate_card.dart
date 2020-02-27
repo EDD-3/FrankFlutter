@@ -18,6 +18,21 @@ class GateCard extends StatelessWidget {
 
   Container buildCard(
       {Color color = Colors.greenAccent, IconData iconData = Icons.lock_open}) {
+    if (gateModel.pedestrianLane.standarLane == null)
+      return Container(
+        padding: EdgeInsets.fromLTRB(2, 2, 0, 0),
+        width: double.maxFinite,
+        child: Card(
+          child: Center(
+            child: Text(
+              'Not Available',
+              style: TextStyle(
+                fontSize: 25.0,
+              ),
+            ),
+          ),
+        ),
+      );
     return Container(
       padding: EdgeInsets.fromLTRB(2, 2, 0, 0),
       width: double.maxFinite,

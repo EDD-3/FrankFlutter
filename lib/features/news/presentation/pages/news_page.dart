@@ -58,6 +58,7 @@ class _NewsPageState extends State<NewsPage> {
               message: state.errorMessage,
             );
           }
+          return Container();
         },
       ),
     );

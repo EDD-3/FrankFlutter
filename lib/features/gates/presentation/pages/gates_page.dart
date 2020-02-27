@@ -29,7 +29,13 @@ class _GatesPageState extends State<GatesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Garitas Nogales"),actions: <Widget>[ IconButton(icon: Icon(Icons.refresh),onPressed: () => _bloc.add(GetGatesEvent()),)],
+        title: Text("Garitas Nogales"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () => _bloc.add(GetGatesEvent()),
+          )
+        ],
         backgroundColor: Colors.red[600],
       ),
       body: buildBody(),
@@ -53,7 +59,8 @@ class _GatesPageState extends State<GatesPage> {
             child: Column(
               children: <Widget>[
                 CarouselSlider.builder(
-                  viewportFraction: 1.0,
+                    viewportFraction: 1.0,
+                    aspectRatio: 2.0,
                     onPageChanged: (index) {
                       setState(() {
                         stateIndex = index;
@@ -81,6 +88,7 @@ class _GatesPageState extends State<GatesPage> {
             ),
           );
         }
+        return Container();
       }),
     );
   }
